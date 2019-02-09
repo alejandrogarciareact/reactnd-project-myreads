@@ -196,3 +196,8 @@ button:active {
   text-align: center;
   font-size: 0.8em;
 }
+
+/* Not found */
+.not-found{
+  text-align: center;
+}
