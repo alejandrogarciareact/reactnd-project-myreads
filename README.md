@@ -1,14 +1,14 @@
 # MyReads Project
 This is bookshelf app that allows you to select and categorize books you have read, are currently reading, or want to read.
 
-## TL;DR
+## Instructions for install and launch project
 
 To get started developing right away:
 
 * install all project dependencies with `npm install`
 * start the development server with `npm start`
 
-## What You're Getting
+## Project structure
 ```bash
 ├── CONTRIBUTING.md
 ├── README.md - This file.
