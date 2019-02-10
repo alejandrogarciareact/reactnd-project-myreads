@@ -4,7 +4,7 @@ import './App.css'
 import ListBooks from "./components/ListBooks";
 import {getAll, update} from "./service/BooksAPI";
 import SearchBook from "./components/SearchBook";
-import {Link, Route} from "react-router-dom";
+import {Link, Route, Switch} from "react-router-dom";
 import NotFound from "./components/NotFound";
 
 class BooksApp extends React.Component {
@@ -33,23 +33,25 @@ class BooksApp extends React.Component {
         const {books} = this.state;
         return (
             <div className="app">
-                <Route path="/search" render={() => (
-                    <SearchBook bookShelves={books} onChangeShelfBook={(book, shelf) => this.updateBook(book, shelf)}/>
-                )}/>
-                <Route path="/" exact
-                       render={() => (
-                           <div>
-                               <ListBooks books={books}
-                                          onChangeShelfBook={(book, shelf) => this.updateBook(book, shelf)}/>
-                               <div className="open-search">
-                                   <Link to='/search'>
-                                       <button>Add a book</button>
-                                   </Link>
+                <Switch>
+                    <Route path="/search" render={() => (
+                        <SearchBook bookShelves={books}
+                                    onChangeShelfBook={(book, shelf) => this.updateBook(book, shelf)}/>
+                    )}/>
+                    <Route path="/" exact
+                           render={() => (
+                               <div>
+                                   <ListBooks books={books}
+                                              onChangeShelfBook={(book, shelf) => this.updateBook(book, shelf)}/>
+                                   <div className="open-search">
+                                       <Link to='/search'>
+                                           <button>Add a book</button>
+                                       </Link>
+                                   </div>
                                </div>
-                           </div>
-                       )}/>
-                <Route component={NotFound} />
-
+                           )}/>
+                    <Route component={NotFound}/>
+                </Switch>
             </div>
         )
     }

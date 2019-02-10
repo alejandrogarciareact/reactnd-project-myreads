@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {search} from "../service/BooksAPI";
 import Book from "./Book";
-import {debounce} from "throttle-debounce";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
+import {debounce} from "throttle-debounce";
 
 class SearchBook extends Component {
     state = {
@@ -11,23 +11,29 @@ class SearchBook extends Component {
         results: []
     };
 
-    searchBooks = (query) => {
-        this.setState(() => ({
-            query: query.trim()
-        }));
-        debounce(300, search(query).then((results) => {
+    debouncedSearch = debounce(300,() => {
+        search(this.state.query.trim()).then((results) => {
             if (results && results.error) {
                 this.setState({results: []});
             } else {
                 this.setState({results})
             }
+        })
+    });
+
+    searchBooks = (query) => {
+        this.setState(() => ({
+            query
         }));
-    }
+
+        this.debouncedSearch();
+    };
+
 
     getBooksWithShelf() {
         const {results} = this.state;
         const {bookShelves} = this.props;
-        const showingBooks = results.slice();
+        const showingBooks = results ? results.slice() : [];
         return showingBooks.map((book) => {
             const bookShelf = bookShelves.find((b) => b.id === book.id);
             book.shelf = bookShelf ? bookShelf.shelf : 'none';
